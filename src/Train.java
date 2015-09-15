@@ -70,22 +70,34 @@ public class Train implements Runnable {
 		SensorEvent event = tsi.getSensor(id);
 		switch(this.direction){
 
-		case (DOWNWARD):
-
-
-		case(UPWARD): 	
-			if(event.getXpos() == 4 && event.getYpos() == 11) {
-				{
+			case (DOWNWARD):{}
+	
+	
+			case(UPWARD): {	
+				if(event.getXpos() == 4 && event.getYpos() == 11) {
+	
 					semArray[0].acquire();
 					tsi.setSwitch(3, 13, 2);		
 				}	
-				if(event.getXpos() == 3 && event.getYpos() == 32){
+				if(event.getXpos() == 3 && event.getYpos() == 9){
 					semArray[0].release();
 				}
-
+	
+				if(event.getXpos() == 4 && event.getYpos() == 13){
+					semArray[0].acquire();
+					tsi.setSwitch(3, 13, 1);		
+				}	
+				if(event.getXpos() == 1 && event.getYpos() == 10){
+					semArray[0].release();
+					if(!semArray[1].tryAcquire()){
+						tsi.setSwitch(4, 9, 2);
+					}
+					else{
+						tsi.setSwitch(4, 9, 1);
+					}
+				}
+	
 			}
-
-
 		}
 	}
 	public void changeDirection() { 
